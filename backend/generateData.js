@@ -2,45 +2,56 @@ const fs = require('fs')
 const axios = require('axios')
 
 // Use your own API key
-const apiKey = 'FJ3V96H0Zez9EgXoNm4rIJmHP00FdPeZ'
+const apiKey = '6hVJqsrbLxFsgSEkZ0V2DFrlUPQavTCu'
 
-// Prepare 100 search keywords
+// Prepare 200 search keywords
 const keywords = [
-  // 'hooray', 'seriously?', 'ironman', 'marvel',
-  // 'racoon', 'thor', 'god', 'omg', 'thunder', 'hmm',
-  // 'huh?', 'love', 'captain', 'america', 'pure',
-  // 'purity', 'tranquil', 'awesome', 'movie', 'chips',
-  // 'war', 'explosion', 'bomb', 'tank', 'sun',
-  // 'glasses', 'coke', 'hot', 'summer', 'winter',
-  // 'snow', 'weather', 'dust', 'corn', 'interstellar',
-  // 'star', 'planet', 'earth', 'humane', 'kind',
-  // 'iphone', 'apple', 'steve jobs', 'smart', 'maple',
-  // 'books', 'library', 'study', 'technology', 'canada',
+  'hooray', 'seriously?', 'ironman', 'marvel',
+  'racoon', 'thor', 'god', 'omg', 'thunder', 'hmm',
+  'huh?', 'love', 'captain', 'america', 'pure',
+  'purity', 'beautiful', 'awesome', 'movie', 'chips',
+  'war', 'cute', 'bomb', 'tank', 'sun',
+  'glasses', 'coke', 'hot', 'summer', 'winter',
+  'snow', 'weather', 'dust', 'corn', 'interstellar',
+  'star', 'planet', 'hey', 'humane', 'kind', 'funny',
+  'iphone', 'apple', 'steve jobs', 'smart', 'maple',
+  'funny cats', 'funny dog', 'come on', 'notification',
 
-  // 'free', 'news', 'cheat', 'tax', 'makeuup', 'dating',
-  // 'propose', 'props', 'tattoo', 'team', 'holic', 'fantasy',
-  // 'fan', 'feelings', 'nothing', 'something', 'coding',
-  // 'geek', 'cat', 'dog', 'doggo', 'catdog', 'adventure',
-  // 'groove', 'grooving', 'mobile', 'web', 'hero',
-  // 'listen music', 'play music', 'music video', 'hang out',
-  // 'infinite', 'infinite loop', 'find out', 'understand',
-  // 'why not', 'wow', 'cheer up', 'dont worry', 'be happy',
-  // 'how to', 'sure', 'why not', 'hint', 'rich', 'fancy',
-  // 'reaction', 'reality', 'weekend', 'cloudy', 'sunny',
-  // 'snow', 'winter', 'summer', 'spring', 'autumn', 'windy',
+  'free', 'news', 'cheat', 'tax', 'makeuup', 'dating',
+  'propose', 'props', 'tattoo', 'team', 'holic', 'fantasy',
+  'fan', 'feelings', 'nothing', 'what', 'coding',
+  'geek', 'cat', 'dog', 'doggo', 'catdog', 'adventure',
+  'groove', 'grooving', 'mobile', 'web', 'hero',
+  'listen music', 'play music', 'music video', 'hang out',
+  'infinite', 'infinite loop', 'find out', 'understand',
+  'why not', 'wow', 'cheer up', 'dont worry', 'be happy',
+  'how to', 'sure', 'why not', 'hint', 'rich', 'fancy',
+  'reaction', 'reality', 'weekend', 'food', 'sunny',
+  'books', 'library', 'study', 'technology', 'canada',
 
-  // 'hello', 'oh my gosh' , 'wait a second', 'please', 'lego',
-  // 'please dont', 'come on', 'hey', 'give up', 'guitar', 'ronaldo',
-  // 'say hi', 'piano', 'cake', 'simpsons', 'finn the human',
-  // 'finn and jake', 'cafe', 'coffee', 'journey', 'kitty',
-  // 'super mario', 'smurf', 'pilot', 'candy', 'chocolate',
-  // 'book', 'story', 'disney', 'pixar', 'food', 'spongebob',
-  // 'rabbit', 'tiger', 'koala', 'chameleon', 'avengers',
-  // 'frodo baggins', 'gandalf', 'snack', 'snoopy', 'cookie',
-  // 'funny cats', 'funny dog', 'gorilla', 'notification',
-  // 'dinosaur', 'kims convenience', 'conan obrien', 'starwars',
-  'funny cats'
-];
+  'superman', 'batman', 'ironman', 'movie',
+  'great', 'sexy', 'boys', 'girls', 'man', 'woman',
+  'black', 'black panther', 'captain marvel', 'vision', 'see',
+  'galaxy', 'dude', 'watch out', 'oooh', 'pooh',
+  'poo', 'hold on', 'tight', 'wait', 'no way',
+  'guru', 'culture', 'programmers', 'learn', 'new',
+  'brand', 'fire', 'trending', 'delicious', 'space',
+  'culture', 'irony', 'sing', 'high', 'drug', 'slack',
+  'metaphor', 'rhythm', 'blue', 'jazz', 'wonder',
+  'life', 'dirty', 'really?', 'bluff', 'maybe',
+
+  'not sure', 'nod', 'yes', 'how about', 'go to hell', 'nice',
+  'too much', 'are you upset', 'angry', 'done', 'messed', 'kidding',
+  'whatever', 'on my way', 'go home', 'magic', 'do it yourself',
+  'believe me', 'too cold', 'joking', 'hahaha', 'i forgot something',
+  'oops', 'fault', 'oh i see', 'i like you', 'i love you',
+  'christmas', 'unbelivable', 'nobody', 'interesting',
+  'holidays', 'santa', 'i told you', 'feel good',
+  'shame', 'shameful', 'coke', 'sensitive', 'not fair',
+  'overaction', 'parrot', 'right now', 'later', 'good night', 'good bye',
+  'demon', 'scary', 'sad', 'welcome', 'party',
+  'loud', 'run', 'go away', 'bothersome', 'joke',
+]
 
 const allRequests = keywords
   .map((keyword) => {
@@ -50,7 +61,7 @@ const allRequests = keywords
       params: {
         api_key: apiKey,
         q: keyword,
-        limit: 50,
+        limit: 40,
       },
       headers: {
         'Content-Type': 'application/json',
@@ -63,14 +74,17 @@ const allRequests = keywords
         const gifHashId = gifPath.split('/')[0]
         const resolvedUrl = `https://i.giphy.com/${gifHashId}.gif`
 
-        // Extract things that seem useful
+        // Extract properties from original data that seem useful
         return {
+          id: gif.id,
+          title: gif.title,
           kind: keyword,
           type: gif.type,
-          id: gif.id,
           slug: gif.slug,
-          url: resolvedUrl,
+          imageUrl: resolvedUrl,
+          sourceUrl: gif.source_post_url,
           createdAt: gif.import_datetime,
+          trendingAt: gif.trending_datetime,
         }
       })
     })
