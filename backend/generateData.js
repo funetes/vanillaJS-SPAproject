@@ -53,6 +53,9 @@ const keywords = [
   'loud', 'run', 'go away', 'bothersome', 'joke',
 ]
 
+const eachKeywordDataCount = 40
+const allDataCount = keywords.length * eachKeywordDataCount
+
 const allRequests = keywords
   .map((keyword) => {
     return axios({
@@ -61,7 +64,7 @@ const allRequests = keywords
       params: {
         api_key: apiKey,
         q: keyword,
-        limit: 40,
+        limit: eachKeywordDataCount,
       },
       headers: {
         'Content-Type': 'application/json',
@@ -112,3 +115,7 @@ Promise
     console.error(error.response)
     console.log('**************************************')
   })
+
+module.exports = {
+  allDataCount,
+}
