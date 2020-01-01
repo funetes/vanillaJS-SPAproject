@@ -1,17 +1,42 @@
-console.log('app is running!')
+console.log("app is running!");
 
-const bodyTag = document.querySelector('body')
+class App {
+  $target = null;
+  data = [];
 
-fetch('http://localhost:4001/api/gif/all?page=2')
-  .then((response) => response.json())
-  .then((response) => {
-    const { data: gifs } = response
+  constructor($target) {
+    this.$target = $target;
 
-    bodyTag.innerHTML = gifs.map((gif) => `
-      <div>
-        GIF Title: ${gif.title} <br />
-        GIF Slug: ${gif.slug} <br />
-        <img src=${gif.imageUrl} alt=${gif.title} /> <br />
-      </div>
-    `).join('')
-  })
+    this.searchInput = new SearchInput({
+      $target,
+      onSearch: keyword => {
+        api.fetchGif(keyword).then(({ data }) => this.setState(data));
+      }
+    });
+
+    this.searchResult = new SearchResult({
+      $target,
+      initialData: this.data,
+      onClick: image => {
+        this.imageInfo.setState({
+          visible: true,
+          image
+        });
+      }
+    });
+
+    this.imageInfo = new ImageInfo({
+      $target,
+      data: {
+        visible: false,
+        image: null
+      }
+    });
+  }
+
+  setState(nextData) {
+    console.log(this);
+    this.data = nextData;
+    this.searchResult.setState(nextData);
+  }
+}
