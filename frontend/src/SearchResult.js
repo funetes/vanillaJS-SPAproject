@@ -24,7 +24,7 @@ class SearchResult {
       .map(
         gif => `
           <div class="item">
-            <img src=${gif.imageUrl} alt=${gif.title} /> <br />
+            <img src=${gif.imageUrl} alt=${gif.title} />
           </div>
         `
       )

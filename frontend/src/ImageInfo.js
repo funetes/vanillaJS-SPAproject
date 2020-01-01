@@ -28,7 +28,7 @@ class ImageInfo {
             <span>${title}</span>
             <button class="close">x</button>
           </div>
-          <img src="${imageUrl}"/>        
+          <img src="${imageUrl}" alt="${title}"/>        
           <div class="description">
             <div>Kind: ${kind}</div>
             <div>Created At: ${createdAt}</div>
