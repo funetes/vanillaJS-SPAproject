@@ -8,3 +8,4 @@ test.js
 .vscode
 .firebase
 backend/public/apidoc
+coverage
