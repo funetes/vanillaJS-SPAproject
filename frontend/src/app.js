@@ -10,7 +10,7 @@ class App {
     this.searchInput = new SearchInput({
       $target,
       onSearch: keyword => {
-        api.fetchGif(keyword).then(({ data }) => this.setState(data));
+        api.fetchCats(keyword).then(({ data }) => this.setState(data));
       }
     });
 

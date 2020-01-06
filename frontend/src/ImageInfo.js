@@ -20,18 +20,18 @@ class ImageInfo {
 
   render() {
     if (this.data.visible) {
-      const { title, imageUrl, kind, createdAt } = this.data.image;
+      const { name, url, temperament, origin } = this.data.image;
 
       this.$imageInfo.innerHTML = `
         <div class="content-wrapper">
           <div class="title">
-            <span>${title}</span>
+            <span>${name}</span>
             <button class="close">x</button>
           </div>
-          <img src="${imageUrl}" alt="${title}"/>        
+          <img src="${url}" alt="${name}"/>        
           <div class="description">
-            <div>Kind: ${kind}</div>
-            <div>Created At: ${createdAt}</div>
+            <div>temperament: ${temperament}</div>
+            <div>origin: ${origin}</div>
           </div>
         </div>`;
       this.$imageInfo.style.display = "block";

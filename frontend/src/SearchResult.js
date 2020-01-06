@@ -22,9 +22,9 @@ class SearchResult {
   render() {
     this.$searchResult.innerHTML = this.data
       .map(
-        gif => `
+        cat => `
           <div class="item">
-            <img src=${gif.imageUrl} alt=${gif.title} />
+            <img src=${cat.url} alt=${cat.name} />
           </div>
         `
       )

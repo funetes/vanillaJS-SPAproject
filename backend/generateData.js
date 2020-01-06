@@ -1,121 +1,155 @@
-const fs = require('fs')
-const axios = require('axios')
-
+const fs = require("fs");
+const axios = require("axios");
+const { shuffle } = require("lodash");
 // Use your own API key
-const apiKey = '6hVJqsrbLxFsgSEkZ0V2DFrlUPQavTCu'
+const END_POINT = "https://api.thecatapi.com/v1";
+const apiKey = "e83d2c75-da93-4c9e-81d3-5ff1b27f8dd7";
 
-// Prepare 200 search keywords
-const keywords = [
-  'hooray', 'seriously?', 'ironman', 'marvel',
-  'racoon', 'thor', 'god', 'omg', 'thunder', 'hmm',
-  'huh?', 'love', 'captain', 'america', 'pure',
-  'purity', 'beautiful', 'awesome', 'movie', 'chips',
-  'war', 'cute', 'bomb', 'tank', 'sun',
-  'glasses', 'coke', 'hot', 'summer', 'winter',
-  'snow', 'weather', 'dust', 'corn', 'interstellar',
-  'star', 'planet', 'hey', 'humane', 'kind', 'funny',
-  'iphone', 'apple', 'steve jobs', 'smart', 'maple',
-  'funny cats', 'funny dog', 'come on', 'notification',
+const nameMap = {
+  Abyssinian: "아비시니안",
+  "American Bobtail": "아메리칸 밥테일",
+  Aegean: "에게안",
+  "Arabian Mau": "아라비안 마우",
+  "Australian Mist": "오스트레일리안 미스트",
+  Balinese: "발리니즈",
+  Bambino: "밤비노",
+  Bengal: "벵갈",
+  Birman: "버먼",
+  Bombay: "봄베이",
+  "British Longhair": "브리티쉬 롱헤어",
+  "British Shorthair": "브리티쉬 숏헤어",
+  Burmese: "버마 고양이",
+  Burmilla: "버밀라",
+  "California Spangled": "캘리포니아 스팽글드",
+  "Chantilly-Tiffany": "샹틀리-티파니",
+  Chartreux: "샤르트뢰",
+  Chausie: "쵸시",
+  Cheetoh: "치토",
+  "Colorpoint Shorthair": "컬러포인트 숏헤어",
+  "Cornish Rex": "코니시 렉스",
+  Cymric: "킴릭",
+  Cyprus: "키프로스 고양이",
+  "Devon Rex": "데본렉스",
+  Donskoy: "돈스코이",
+  "Dragon Li": "드레곤리",
+  "Egyptian Mau": "이집션 마우",
+  "European Burmese": "유러피안 버마 고양이",
+  "Exotic Shorthair": "엑조틱 숏헤어",
+  "Havana Brown": "하바나 브라운",
+  Himalayan: "히말라얀",
+  "Japanese Bobtail": "재패니즈 밥테일",
+  Javanese: "자바니즈",
+  "Khao Manee": "카오 마니",
+  Korat: "코랏",
+  Kurilian: "쿠라리안 밥테일",
+  LaPerm: "라팜",
+  "Maine Coon": "메인쿤",
+  Malayan: "말레이안",
+  Manx: "맹크스",
+  Munchkin: "먼치킨",
+  Nebelung: "네벨룽",
+  "Norwegian Forest Cat": "노르웨이 숲 고양이",
+  Ocicat: "오시캣",
+  Oriental: "오리엔탈 숏헤어",
+  Persian: "페르시안",
+  "Pixie-bob": "픽시 밥",
+  Ragamuffin: "라가머핀",
+  Ragdoll: "랙돌",
+  "Russian Blue": "러시안 블루",
+  Savannah: "사바나",
+  "Scottish Fold": "스코티시 폴드",
+  "Selkirk Rex": "셀커크 렉스",
+  Siamese: "샴 고양이",
+  Siberian: "시베리안",
+  Singapura: "싱가푸라",
+  Snowshoe: "스노우슈",
+  Somali: "소말리 고양이",
+  Sphynx: "스핑크스",
+  Tonkinese: "톤키니즈",
+  Toyger: "토이거",
+  "Turkish Angora": "터키시 앙고라",
+  "Turkish Van": "터키시 반",
+  "York Chocolate": "요크 초콜릿"
+};
 
-  'free', 'news', 'cheat', 'tax', 'makeuup', 'dating',
-  'propose', 'props', 'tattoo', 'team', 'holic', 'fantasy',
-  'fan', 'feelings', 'nothing', 'what', 'coding',
-  'geek', 'cat', 'dog', 'doggo', 'catdog', 'adventure',
-  'groove', 'grooving', 'mobile', 'web', 'hero',
-  'listen music', 'play music', 'music video', 'hang out',
-  'infinite', 'infinite loop', 'find out', 'understand',
-  'why not', 'wow', 'cheer up', 'dont worry', 'be happy',
-  'how to', 'sure', 'why not', 'hint', 'rich', 'fancy',
-  'reaction', 'reality', 'weekend', 'food', 'sunny',
-  'books', 'library', 'study', 'technology', 'canada',
+const limit = 100;
 
-  'superman', 'batman', 'ironman', 'movie',
-  'great', 'sexy', 'boys', 'girls', 'man', 'woman',
-  'black', 'black panther', 'captain marvel', 'vision', 'see',
-  'galaxy', 'dude', 'watch out', 'oooh', 'pooh',
-  'poo', 'hold on', 'tight', 'wait', 'no way',
-  'guru', 'culture', 'programmers', 'learn', 'new',
-  'brand', 'fire', 'trending', 'delicious', 'space',
-  'culture', 'irony', 'sing', 'high', 'drug', 'slack',
-  'metaphor', 'rhythm', 'blue', 'jazz', 'wonder',
-  'life', 'dirty', 'really?', 'bluff', 'maybe',
+const fetcher = axios.create({
+  headers: {
+    "x-api-key": apiKey
+  }
+});
 
-  'not sure', 'nod', 'yes', 'how about', 'go to hell', 'nice',
-  'too much', 'are you upset', 'angry', 'done', 'messed', 'kidding',
-  'whatever', 'on my way', 'go home', 'magic', 'do it yourself',
-  'believe me', 'too cold', 'joking', 'hahaha', 'i forgot something',
-  'oops', 'fault', 'oh i see', 'i like you', 'i love you',
-  'christmas', 'unbelivable', 'nobody', 'interesting',
-  'holidays', 'santa', 'i told you', 'feel good',
-  'shame', 'shameful', 'coke', 'sensitive', 'not fair',
-  'overaction', 'parrot', 'right now', 'later', 'good night', 'good bye',
-  'demon', 'scary', 'sad', 'welcome', 'party',
-  'loud', 'run', 'go away', 'bothersome', 'joke',
-]
+const getCatBreeds = async () => {
+  const res = await fetcher.get(`${END_POINT}/breeds`);
+  const { data: breeds } = res;
 
-const eachKeywordDataCount = 40
-const allDataCount = keywords.length * eachKeywordDataCount
+  return breeds.map(breed => {
+    const { id, name, temperament, origin } = breed;
+    return {
+      id,
+      name,
+      temperament,
+      origin
+    };
+  });
+};
 
-const allRequests = keywords
-  .map((keyword) => {
-    return axios({
-      method: 'get',
-      url: 'http://api.giphy.com/v1/gifs/search',
-      params: {
-        api_key: apiKey,
-        q: keyword,
-        limit: eachKeywordDataCount,
-      },
-      headers: {
-        'Content-Type': 'application/json',
-      },
+const allRequests = async () => {
+  const breeds = await getCatBreeds();
+  const tasks = [];
+
+  for (const breed of breeds) {
+    for (let page = 1; page <= 5; page++) {
+      tasks.push(
+        fetcher({
+          url: `${END_POINT}/images/search`,
+          params: {
+            limit,
+            page,
+            breed_id: breed.id
+          }
+        }).then(res => {
+          const { name, temperament, origin } = breed;
+          const { data: cats } = res;
+
+          return cats.map(({ id, url, width, height }) => ({
+            name: `${name} / ${nameMap[name]}`,
+            id,
+            url,
+            width,
+            height,
+            temperament,
+            origin
+          }));
+        })
+      );
+    }
+  }
+
+  Promise.all(tasks)
+    .then(allResponses => {
+      const result = allResponses.reduce(
+        (flattened, array) => flattened.concat(...array),
+        []
+      );
+
+      fs.writeFile(
+        "data.json",
+        JSON.stringify(shuffle(result)),
+        "utf8",
+        () => {}
+      );
+
+      console.log(`crwaling success. total data: ${result.length}`);
     })
-    .then((response) => response.data.data)
-    .then((gifs) => {
-      return gifs.map((gif) => {
-        const gifPath = gif.images.original_still.url.split('/media/')[1]
-        const gifHashId = gifPath.split('/')[0]
-        const resolvedUrl = `https://i.giphy.com/${gifHashId}.gif`
+    .catch(error => {
+      console.log("**************************************");
+      console.log("******** Axios error occured. ********");
+      console.log("**************************************");
+      console.error(error.response);
+      console.log("**************************************");
+    });
+};
 
-        // Extract properties from original data that seem useful
-        return {
-          id: gif.id,
-          title: gif.title,
-          kind: keyword,
-          type: gif.type,
-          slug: gif.slug,
-          imageUrl: resolvedUrl,
-          sourceUrl: gif.source_post_url,
-          createdAt: gif.import_datetime,
-          trendingAt: gif.trending_datetime,
-        }
-      })
-    })
-  })
-
-Promise
-  .all(allRequests)
-  .then((allResponses) => {
-    const result = allResponses.reduce(
-      (flattened, array) => flattened.concat(...array),
-      []
-    )
-
-    fs.writeFile(
-      'data.json',
-      JSON.stringify(result),
-      'utf8',
-      () => {}
-    )
-  })
-  .catch((error) => {
-    console.log('**************************************')
-    console.log('******** Axios error occured. ********')
-    console.log('**************************************')
-    console.error(error.response)
-    console.log('**************************************')
-  })
-
-module.exports = {
-  allDataCount,
-}
+allRequests();

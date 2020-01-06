@@ -7,7 +7,8 @@
     "test": "jest --config=jest.config.js",
     "generate-docs": "apidoc -e '(node_modules|public)' --input backend/ --output backend/public/apidoc/",
     "fire-stress": "artillery run backend/artillery/stressConfig.json",
-    "start": "cd frontend && http-server ."
+    "start": "cd frontend && http-server .",
+    "crawling": "cd backend && node generateData"
   },
   "repository": {
     "type": "git",
@@ -28,7 +29,8 @@
     "apidoc": "^0.19.1",
     "axios": "^0.19.0",
     "cors": "^2.8.5",
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "lodash": "^4.17.15"
   },
   "devDependencies": {
     "artillery": "^1.6.0-29",
