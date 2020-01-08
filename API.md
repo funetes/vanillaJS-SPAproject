@@ -30,66 +30,65 @@
 ```
 
 ## 2. Endpoints
-## 1. GET /cats/random50
-### Request parameter
-None
-### Query paramter
-None
-### Response
-Success 200
+## GET /cats/random50
+- ### Request parameter
+  None
+- ### Query paramter
+  None
+- ### Response
+  Success 200
 
-|Field name|Type|Description|
-|-|-|-|
-|data|Array|랜덤한 50개의 고양이 사진 목록입니다.|
+  |Field name|Type|Description|
+  |-|-|-|
+  |data|Array|랜덤한 50개의 고양이 사진 목록입니다.|
 
-```typescript
- HTTP/1.1 200 OK
-{
-  "data": Cat[]
-}
-```
+  ```typescript
+  HTTP/1.1 200 OK
+  {
+    "data": Cat[]
+  }
+  ```
 
 ## 2. GET /cats/search
-### Request parameter
-None
-### Query paramter
-|Field name|Type|Description|
-|-|-|-|
-|q|string|검색 keyword 입니다.|
+- ### Request parameter
+  None
+- ### Query paramter
+  |Field name|Type|Description|
+  |-|-|-|
+  |q|string|검색 keyword 입니다.|
 
-### Response
-Success 200
+- ### Response
+  Success 200
 
-|Field name|Type|Description|
-|-|-|-|
-|data|Array|Keyword로 검색된 고양이 사진 목록입니다.|
+  |Field name|Type|Description|
+  |-|-|-|
+  |data|Array|Keyword로 검색된 고양이 사진 목록입니다.|
 
-```typescript
- HTTP/1.1 200 OK
-{
-  "data": Cat[]
-}
-```
+  ```typescript
+  HTTP/1.1 200 OK
+  {
+    "data": Cat[]
+  }
+  ```
 
 ## 3. GET /cats/:id
-### Request parameter
-|Field name|Type|Description|
-|-|-|-|
-|id|string|고양이 사진의 id값 입니다.|
-### Query paramter
-None
+- ### Request parameter
+  |Field name|Type|Description|
+  |-|-|-|
+  |id|string|고양이 사진의 id값 입니다.|
+- ### Query paramter
+  None
 
-### Response
-Success 200
+- ### Response
+  Success 200
 
-|Field name|Type|Description|
-|-|-|-|
-|data|Object|Id로 검색된 고양이 사진 입니다.|
+  |Field name|Type|Description|
+  |-|-|-|
+  |data|Object|Id로 검색된 고양이 사진 입니다.|
 
-```typescript
- HTTP/1.1 200 OK
-{
-  "data": Cat
-}
-```
-
+  ```typescript
+  HTTP/1.1 200 OK
+  {
+    "data": Cat
+  }
+  ```
