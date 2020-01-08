@@ -1,35 +1,5 @@
 # API
 
-## 1. Model
-### Cat
-```typescript
-{
-  "id": string,
-  "title": string,
-  "kind": string,
-  "type": string,
-  "slug": string,
-  "imageUrl": string,
-  "sourceUrl": string,
-  "createdAt": string,
-  "trendingAt": string,
-}
-
-// example
-{
-  "id": "11sBLVxNs7v6WA",
-  "title": "hooray-people",
-  "kind": "hooray",
-  "type": "gif",
-  "slug": "cheer-cheering-11sBLVxNs7v6WA",
-  "imageUrl": "https://i.giphy.com/11sBLVxNs7v6WA.gif",
-  "sourceUrl": "https://allinonefun.tumblr.com/post/64576645275/all-in-one-fun-dancing-cat",
-  "createdAt": "2015-01-29 16:30:00",
-  "trendingAt": "2018-03-11 12:30:00",
-},
-```
-
-## 2. Endpoints
 ## GET /cats/random50
 - ### Request parameter
   None
@@ -45,7 +15,11 @@
   ```typescript
   HTTP/1.1 200 OK
   {
-    "data": Cat[]
+    "data": [{
+      id: string
+      url: string
+      name: string
+    }]
   }
   ```
 
@@ -67,7 +41,11 @@
   ```typescript
   HTTP/1.1 200 OK
   {
-    "data": Cat[]
+    "data": [{
+      id: string
+      url: string
+      name: string
+    }]
   }
   ```
 
@@ -89,6 +67,14 @@
   ```typescript
   HTTP/1.1 200 OK
   {
-    "data": Cat
+    "data": {
+      name: string
+      id: string
+      url: string
+      width: number
+      height: number
+      temperament: string
+      origin: string
+    }
   }
   ```
