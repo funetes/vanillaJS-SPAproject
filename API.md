@@ -29,7 +29,7 @@
 - ### Query paramter
   |Field name|Type|Description|
   |-|-|-|
-  |q|string|검색 keyword 입니다.|
+  |q|string|고양이의 품종(영어/한글).|
 
 - ### Response
   Success 200
