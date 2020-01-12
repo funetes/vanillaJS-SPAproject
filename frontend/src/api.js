@@ -1,5 +1,5 @@
-// 나중에 프로그래머스 서버로 바꿔야 함
-const API_ENDPOINT = "http://localhost:4001";
+const API_ENDPOINT =
+  "https://rhdd0roxs5.execute-api.ap-northeast-2.amazonaws.com/dev";
 
 const api = {
   fetchCats: keyword => {

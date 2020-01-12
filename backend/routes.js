@@ -5,7 +5,7 @@ const fs = require("fs");
 const router = express.Router();
 const { getRandomNumber, readFile } = require("./utils");
 
-const pagingUnit = 10;
+const pagingUnit = 20;
 const dataFilePath = path.resolve(__dirname, "data.json");
 const resolvingData = readFile(dataFilePath);
 
