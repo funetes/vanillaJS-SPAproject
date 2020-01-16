@@ -1,13 +1,11 @@
 const express = require("express");
 const { delay } = require("lodash");
-const path = require("path");
 const fs = require("fs");
 const router = express.Router();
-const { getRandomNumber, readFile } = require("./utils");
+const { getRandomNumber } = require("./utils");
 
-const pagingUnit = 20;
-const dataFilePath = path.resolve(__dirname, "data.json");
-const resolvingData = readFile(dataFilePath);
+const pagingUnit = 32;
+const data = require("./data.json");
 
 const allDataCount = JSON.parse(fs.readFileSync("data.json").toString()).length;
 
@@ -69,21 +67,11 @@ router.get("/cats/random50", (req, res) => {
         message: "This is an intentional error."
       });
     }
-    resolvingData
-      .then(data => {
-        return res.status(200).send({
-          data: data
-            .filter((_, index) => randomFiftyIndice.includes(index))
-            .map(convertToForList)
-        });
-      })
-      .catch(error => {
-        console.error(error);
-
-        return res.status(500).send({
-          message: "An error has occurred while fetching data."
-        });
-      });
+    return res.status(200).send({
+      data: data
+        .filter((_, index) => randomFiftyIndice.includes(index))
+        .map(convertToForList)
+    });
   }, getRandomNumber(0, MAX_DELAY_TIME));
 });
 
@@ -106,27 +94,17 @@ router.get("/cats/search", (req, res) => {
         message: "This is an intentional error."
       });
     }
-    resolvingData
-      .then(data => {
-        return res.status(200).send({
-          data: data
-            .filter(
-              ({ name, temperament, origin }) =>
-                name.toLowerCase().includes(q.toLowerCase()) ||
-                temperament.toLowerCase().includes(q.toLowerCase()) ||
-                origin.toLowerCase().includes(q.toLowerCase())
-            )
-            .slice(startIndex, endIndex)
-            .map(convertToForList)
-        });
-      })
-      .catch(error => {
-        console.error(error);
-
-        return res.status(500).send({
-          message: "An error has occurred while fetching data."
-        });
-      });
+    return res.status(200).send({
+      data: data
+        .filter(
+          ({ name, temperament, origin }) =>
+            name.toLowerCase().includes(q.toLowerCase()) ||
+            temperament.toLowerCase().includes(q.toLowerCase()) ||
+            origin.toLowerCase().includes(q.toLowerCase())
+        )
+        .slice(startIndex, endIndex)
+        .map(convertToForList)
+    });
   }, getRandomNumber(0, MAX_DELAY_TIME));
 });
 
@@ -144,27 +122,17 @@ router.get("/cats/:id", (req, res) => {
         message: "This is an intentional error."
       });
     }
-    resolvingData
-      .then(data => {
-        const foundCat = data.find(cat => cat.id === id);
+    const foundCat = data.find(cat => cat.id === id);
 
-        if (!foundCat) {
-          return res.status(400).send({
-            message: "The gif image with the given id could not be found."
-          });
-        }
-
-        return res.status(200).send({
-          data: foundCat
-        });
-      })
-      .catch(error => {
-        console.error(error);
-
-        return res.status(500).send({
-          message: "An error has occurred while fetching data."
-        });
+    if (!foundCat) {
+      return res.status(400).send({
+        message: "The gif image with the given id could not be found."
       });
+    }
+
+    return res.status(200).send({
+      data: foundCat
+    });
   }, getRandomNumber(0, MAX_DELAY_TIME));
 });
 
