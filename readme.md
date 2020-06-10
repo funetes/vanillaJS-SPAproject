@@ -9,7 +9,7 @@
 - 과정 관련 문의사항: 썬에게 슬랙 DM, 또는 02-539-1885, learn@programmers.co.kr
 - 환불 등 결제 관련 문의사항: contact@programmers.co.kr
 
-미션 요구사항, 세션 녹화본, 세션에서 쓴 슬라이드 등을 공유하는 학습 공간은 [여기를 클릭](https://school.programmers.co.kr/courses/10342) 하세요.
+미션 요구사항, 세션 녹화본, 세션에서 쓴 슬라이드 등을 공유하는 학습 공간은 [여기를 클릭](https://school.programmers.co.kr/courses/10348) 하세요.
 
 ----
 
