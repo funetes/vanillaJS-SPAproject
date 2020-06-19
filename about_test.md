@@ -8,7 +8,7 @@
 
 # 실행법
 
-- data.json이 없는 경우 backend 폴더로 이동한 뒤 `npm run crawaling`으로 데이터를 먼저 생성해야함
+- data.json이 없는 경우 backend 폴더로 이동한 뒤 `npm run crawling`으로 데이터를 먼저 생성해야함
 - 이후 `node app.js` 실행
 - 이후 frontend/index.html 을 브라우저로 열면 실행 됨
   - 혹은 frontend 폴더에서 `npm start` 입력
