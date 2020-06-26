@@ -30,6 +30,7 @@
   |Field name|Type|Description|
   |-|-|-|
   |q|string|고양이의 품종(영어/한글).|
+  |page|number|페이지|
 
 - ### Response
   Success 200
