@@ -78,6 +78,7 @@ router.get("/cats/random50", (req, res) => {
 router.get("/cats/search", (req, res) => {
   const { q } = req.query;
   const page = req.query.page ? Number(req.query.page) : 1;
+  const limit = req.query.limit ? Number(req.query.limit) : 50;
 
   if (!q) {
     return res.status(400).send({
@@ -104,6 +105,7 @@ router.get("/cats/search", (req, res) => {
         )
         .slice(startIndex, endIndex)
         .map(convertToForList)
+        .slice(0, limit)
     });
   }, getRandomNumber(0, MAX_DELAY_TIME));
 });

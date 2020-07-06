@@ -31,6 +31,7 @@
   |-|-|-|
   |q|string|고양이의 품종(영어/한글).|
   |page|number|페이지|
+  |limit|number|최대 아이템 갯수|
 
 - ### Response
   Success 200
