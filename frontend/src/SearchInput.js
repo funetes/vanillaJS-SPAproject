@@ -1,24 +1,19 @@
 const TEMPLATE = '<input type="text">';
 
 class SearchInput {
-  //<div id="App">
-  // <input placeholder='고양이를 검색해보세요.'/> <= onKeyup()
-  //</div>
   constructor({ $target, onSearch }) {
-    const $searchInput = document.createElement('input');
-    this.$searchInput = $searchInput;
+    this.$wrapper = document.createElement('header');
+    this.$searchInput = document.createElement('input');
     this.$searchInput.placeholder = '고양이를 검색해보세요.|';
+    this.$searchInput.className = 'SearchInput';
+    this.$wrapper.appendChild(this.$searchInput);
+    $target.appendChild(this.$wrapper);
 
-    $searchInput.className = 'SearchInput';
-    $target.appendChild($searchInput);
-
-    $searchInput.addEventListener('keyup', e => {
+    this.$searchInput.addEventListener('keyup', e => {
       if (e.keyCode === 13) {
         onSearch(e.target.value);
       }
     });
-
-    console.log('SearchInput created.', this);
   }
   render() {}
 }

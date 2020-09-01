@@ -1,7 +1,4 @@
 class DarkmodeCheckBox {
-  //<div id="App">
-  // <input tyle='checkbox'/>
-  //</div>
   constructor({ $target }) {
     const $darkModeInput = document.createElement('input');
     this.$darkModeInput = $darkModeInput;
@@ -15,7 +12,6 @@ class DarkmodeCheckBox {
       .setAttribute(attribute, isDark ? 'dark' : 'light');
     return;
   }
-
   handleDarkmode(e) {
     return this.setHtmlAttribute('color-mode', e.target.checked);
   }

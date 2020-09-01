@@ -3,7 +3,6 @@ console.log('app is running!');
 class App {
   $target = null;
   data = [];
-  //$target => <div id="App"></div>
   constructor($target) {
     this.$target = $target;
 
