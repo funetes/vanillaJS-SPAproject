@@ -7,6 +7,10 @@ class App {
   constructor($target) {
     this.$target = $target;
 
+    this.darkmodeCheckBox = new DarkmodeCheckBox({
+      $target,
+    });
+
     this.searchInput = new SearchInput({
       $target,
       onSearch: keyword => {

@@ -84,6 +84,8 @@ body * {
   width: 100%;
 }
 
+.DarkmodeCheckBox {
+}
 @media screen and (max-width: 992px) {
   .SearchResult {
     grid-template-columns: repeat(3, minmax(250px, 1fr));
@@ -105,6 +107,6 @@ body * {
 /* @media (prefers-color-scheme: dark) {
   body {
     background-color: #000;
-    color: #FFF;
+    color: #fff;
   }
 } */
