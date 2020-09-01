@@ -5,6 +5,15 @@
   font-style: normal;
 }
 
+:root[color-mode='dark'] {
+  --background: #000;
+  --color: #fff;
+}
+:root[color-mode='light'] {
+  --background: #fff;
+  --color: #000;
+}
+
 html {
   box-sizing: border-box;
 }
@@ -17,6 +26,11 @@ body * {
 *:before,
 *:after {
   box-sizing: inherit;
+}
+
+body {
+  background-color: var(--background);
+  color: var(--color);
 }
 
 #App {
@@ -84,8 +98,6 @@ body * {
   width: 100%;
 }
 
-.DarkmodeCheckBox {
-}
 @media screen and (max-width: 992px) {
   .SearchResult {
     grid-template-columns: repeat(3, minmax(250px, 1fr));

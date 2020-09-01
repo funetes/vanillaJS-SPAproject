@@ -10,23 +10,25 @@ class DarkmodeCheckBox {
     $target.appendChild($darkModeInput);
     this.darkmodeInit();
   }
+  setHtmlAttribute(attribute, isDark) {
+    document.documentElement //
+      .setAttribute(attribute, isDark ? 'dark' : 'light');
+    return;
+  }
+
   handleDarkmode(e) {
-    document.documentElement.setAttribute(
-      'color-mode',
-      e.target.checked ? 'dark' : 'light'
-    );
+    return this.setHtmlAttribute('color-mode', e.target.checked);
   }
   darkmodeInit() {
     this.prefersDark =
       window.matchMedia &&
       window.matchMedia('(prefers-color-scheme: Dark)').matches;
 
-    document.documentElement.setAttribute(
-      'color-mode',
-      this.prefersDark ? 'dark' : 'light'
-    );
-
+    this.setHtmlAttribute('color-mode', this.prefersDark);
     this.$darkModeInput.checked = this.prefersDark;
-    this.$darkModeInput.addEventListener('change', this.handleDarkmode);
+    this.$darkModeInput.addEventListener(
+      'change',
+      this.handleDarkmode.bind(this)
+    );
   }
 }
