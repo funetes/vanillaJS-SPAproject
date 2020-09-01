@@ -1,9 +1,9 @@
-console.log("app is running!");
+console.log('app is running!');
 
 class App {
   $target = null;
   data = [];
-
+  //$target => <div id="App"></div>
   constructor($target) {
     this.$target = $target;
 
@@ -11,7 +11,7 @@ class App {
       $target,
       onSearch: keyword => {
         api.fetchCats(keyword).then(({ data }) => this.setState(data));
-      }
+      },
     });
 
     this.searchResult = new SearchResult({
@@ -20,17 +20,17 @@ class App {
       onClick: image => {
         this.imageInfo.setState({
           visible: true,
-          image
+          image,
         });
-      }
+      },
     });
 
     this.imageInfo = new ImageInfo({
       $target,
       data: {
         visible: false,
-        image: null
-      }
+        image: null,
+      },
     });
   }
 
