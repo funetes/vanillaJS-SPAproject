@@ -3,14 +3,13 @@ class SearchResult {
   data = null;
   onClick = null;
 
-  constructor({ $target, initialData, onClick }) {
+  constructor({ $target, onClick }) {
     this.$searchResult = document.createElement('section');
     this.$searchResult.className = 'SearchResult';
     $target.appendChild(this.$searchResult);
 
-    this.data = initialData;
+    // this.data = null;
     this.onClick = onClick;
-
     this.render();
   }
 
@@ -20,15 +19,22 @@ class SearchResult {
   }
 
   render() {
-    this.$searchResult.innerHTML = this.data
-      .map(
-        cat => `
+    if (this.data) {
+      if (this.data.length === 0) {
+        this.$searchResult.innerHTML =
+          '<div class="EmptyData">검색결과가 없습니다.😭</div>';
+      } else {
+        this.$searchResult.innerHTML = this.data
+          .map(
+            cat => `
           <div class="item">
             <img src=${cat.url} alt=${cat.name} />
           </div>
         `
-      )
-      .join('');
+          )
+          .join('');
+      }
+    }
 
     this.$searchResult.querySelectorAll('.item').forEach(($item, index) => {
       $item.addEventListener('click', () => {
