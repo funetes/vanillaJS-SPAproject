@@ -10,10 +10,16 @@ class App {
       $target,
     });
 
+    this.loading = new Loading({ $target });
+
     this.searchInput = new SearchInput({
       $target,
       onSearch: keyword => {
-        api.fetchCats(keyword).then(({ data }) => this.setState(data));
+        this.loading.setState({ show: true });
+        api.fetchCats(keyword).then(({ data }) => {
+          this.loading.setState({ show: false });
+          this.setState(data);
+        });
       },
     });
 
