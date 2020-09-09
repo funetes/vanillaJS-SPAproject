@@ -9,15 +9,27 @@ class ImageInfo {
     $target.appendChild($imageInfo);
 
     this.data = data;
-
     this.render();
   }
-
+  showDetail(id) {
+    api.detailCat(id).then(({ data }) => {
+      this.setState({
+        visible: true,
+        image: data,
+      });
+    });
+  }
+  closeModal() {
+    this.setState({
+      visible: false,
+      image: null,
+    });
+    this.render();
+  }
   setState(nextData) {
     this.data = nextData;
     this.render();
   }
-
   render() {
     if (this.data.visible) {
       const { name, url, temperament, origin } = this.data.image;
@@ -35,6 +47,17 @@ class ImageInfo {
           </div>
         </div>`;
       this.$imageInfo.style.display = 'block';
+      this.$imageInfo
+        .querySelector('.close')
+        .addEventListener('click', () => this.closeModal());
+      window.addEventListener(
+        'keydown',
+        e => e.keyCode === 27 && this.closeModal()
+      );
+      this.$imageInfo.addEventListener(
+        'click',
+        e => e.target.nodeName !== 'IMG' && this.closeModal()
+      );
     } else {
       this.$imageInfo.style.display = 'none';
     }

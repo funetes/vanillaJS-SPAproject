@@ -36,14 +36,12 @@ class App {
       $wrapper: this.header,
     });
 
+    //id, url, name
     this.searchResult = new SearchResult({
       $target,
       initialData: this.data,
       onClick: image => {
-        this.imageInfo.setState({
-          visible: true,
-          image,
-        });
+        this.imageInfo.showDetail(image.id);
       },
     });
 
