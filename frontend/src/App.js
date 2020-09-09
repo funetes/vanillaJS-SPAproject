@@ -5,12 +5,12 @@ class App {
   data = [];
   constructor($target) {
     this.$target = $target;
-
     this.darkmodeCheckBox = new DarkmodeCheckBox({
       $target,
     });
-
     this.loading = new Loading({ $target });
+
+    this.header = new Header({ $target });
 
     this.searchInput = new SearchInput({
       $target,
@@ -21,6 +21,19 @@ class App {
           this.setState(data);
         });
       },
+      $wrapper: this.header,
+    });
+
+    this.randomButton = new RandomButton({
+      $target,
+      onClick: () => {
+        this.loading.setState({ show: true });
+        api.randomCats().then(({ data }) => {
+          this.loading.setState({ show: false });
+          this.setState(data);
+        });
+      },
+      $wrapper: this.header,
     });
 
     this.searchResult = new SearchResult({

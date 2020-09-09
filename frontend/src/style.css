@@ -39,6 +39,17 @@ body {
   column-gap: 1.5em;
 }
 
+.header {
+  display: flex;
+}
+
+.header input {
+  flex: 0.8;
+}
+.header button {
+  flex: 0.2;
+}
+
 .SearchResult {
   margin-top: 10px;
   display: grid;
