@@ -27,12 +27,10 @@ class App {
         });
       },
     });
-
-    //id, url, name
     this.searchResult = new SearchResult({
       $target,
       initialData: this.data,
-      onClick: image => this.imageInfo.showDetail(image.id),
+      onClick: ({ id }) => this.imageInfo.showDetail(id),
     });
 
     this.imageInfo = new ImageInfo({

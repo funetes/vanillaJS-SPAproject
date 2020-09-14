@@ -6,6 +6,7 @@ class Header {
 
     this.searchInput = new SearchInput({
       $target: this.$header,
+      $parentTarget: $target,
       onSearch,
     });
 
