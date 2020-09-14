@@ -8,7 +8,6 @@ class SearchResult {
     this.$searchResult.className = 'SearchResult';
     $target.appendChild(this.$searchResult);
 
-    // this.data = null;
     this.onClick = onClick;
     this.render();
   }
@@ -19,27 +18,26 @@ class SearchResult {
   }
 
   render() {
-    if (this.data) {
-      if (this.data.length === 0) {
-        this.$searchResult.innerHTML =
-          '<div class="EmptyData">검색결과가 없습니다.😭</div>';
-      } else {
-        this.$searchResult.innerHTML = this.data
-          .map(
-            cat => `
+    this.data &&
+      (this.data.length === 0
+        ? (this.$searchResult.innerHTML =
+            '<div class="EmptyData">검색결과가 없습니다.😭</div>')
+        : (this.$searchResult.innerHTML = this.data
+            .map(
+              cat => `
           <div class="item">
             <img src=${cat.url} alt=${cat.name} />
           </div>
         `
-          )
-          .join('');
-      }
-    }
+            )
+            .join('')));
 
-    this.$searchResult.querySelectorAll('.item').forEach(($item, index) => {
-      $item.addEventListener('click', () => {
-        this.onClick(this.data[index]);
+    this.data &&
+      this.data.length !== 0 &&
+      this.$searchResult.querySelectorAll('.item').forEach(($item, index) => {
+        $item.addEventListener('click', () => {
+          this.onClick(this.data[index]);
+        });
       });
-    });
   }
 }

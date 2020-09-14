@@ -32,7 +32,7 @@ class ImageInfo {
   }
   render() {
     if (this.data.visible) {
-      const { name, url, temperament, origin } = this.data.image;
+      const { name = 'undefined', url, temperament, origin } = this.data.image;
 
       this.$imageInfo.innerHTML = `
         <div class="content-wrapper">
@@ -52,7 +52,7 @@ class ImageInfo {
         .addEventListener('click', () => this.closeModal());
       window.addEventListener(
         'keydown',
-        e => e.keyCode === 27 && this.closeModal()
+        e => e.key === 'Escape' && this.closeModal()
       );
       this.$imageInfo.addEventListener(
         'click',

@@ -10,9 +10,7 @@ class App {
     });
     this.loading = new Loading({ $target });
 
-    this.header = new Header({ $target });
-
-    this.searchInput = new SearchInput({
+    this.header = new Header({
       $target,
       onSearch: keyword => {
         this.loading.setState({ show: true });
@@ -21,11 +19,6 @@ class App {
           this.setState(data);
         });
       },
-      $wrapper: this.header,
-    });
-
-    this.randomButton = new RandomButton({
-      $target,
       onClick: () => {
         this.loading.setState({ show: true });
         api.randomCats().then(({ data }) => {
@@ -33,16 +26,13 @@ class App {
           this.setState(data);
         });
       },
-      $wrapper: this.header,
     });
 
     //id, url, name
     this.searchResult = new SearchResult({
       $target,
       initialData: this.data,
-      onClick: image => {
-        this.imageInfo.showDetail(image.id);
-      },
+      onClick: image => this.imageInfo.showDetail(image.id),
     });
 
     this.imageInfo = new ImageInfo({
