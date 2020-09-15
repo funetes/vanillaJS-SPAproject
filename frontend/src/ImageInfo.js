@@ -31,10 +31,11 @@ class ImageInfo {
     this.render();
   }
   render() {
-    if (this.data.visible) {
-      const { name = 'undefined', url, temperament, origin } = this.data.image;
+    const { data, $imageInfo, closeModal } = this;
+    if (data.visible) {
+      const { name = 'undefined', url, temperament, origin } = data.image;
 
-      this.$imageInfo.innerHTML = `
+      $imageInfo.innerHTML = `
         <div class="content-wrapper">
           <div class="title">
             <span>${name}</span>
@@ -46,20 +47,20 @@ class ImageInfo {
             <div>태생: ${origin}</div>
           </div>
         </div>`;
-      this.$imageInfo.style.display = 'block';
-      this.$imageInfo
+      $imageInfo.style.display = 'block';
+      $imageInfo
         .querySelector('.close')
-        .addEventListener('click', () => this.closeModal());
+        .addEventListener('click', () => closeModal());
       window.addEventListener(
         'keydown',
-        e => e.key === 'Escape' && this.closeModal()
+        e => e.key === 'Escape' && closeModal()
       );
-      this.$imageInfo.addEventListener(
+      $imageInfo.addEventListener(
         'click',
-        e => e.target.nodeName !== 'IMG' && this.closeModal()
+        e => e.target.nodeName !== 'IMG' && closeModal()
       );
     } else {
-      this.$imageInfo.style.display = 'none';
+      $imageInfo.style.display = 'none';
     }
   }
 }

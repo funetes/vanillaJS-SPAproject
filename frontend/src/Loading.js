@@ -20,12 +20,13 @@ class Loading {
     this.render();
   }
   render() {
-    if (this.data.show) {
-      this.$loading.classList.add('loading');
-      this.$loading.innerText = 'Loading...';
+    const { data, $loading } = this;
+    if (data.show) {
+      $loading.classList.add('loading');
+      $loading.innerText = 'Loading...';
     } else {
-      this.$loading.classList.remove('loading');
-      this.$loading.innerText = '';
+      $loading.classList.remove('loading');
+      $loading.innerText = '';
     }
   }
 }

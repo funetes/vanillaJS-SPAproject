@@ -5,6 +5,10 @@ const api = {
     fetch(`${API_ENDPOINT}/api/cats/search?q=${keyword}`).then(res =>
       res.json()
     ),
+  fetchCatsPage: (keyword, page) =>
+    fetch(
+      `${API_ENDPOINT}/api/cats/search?q=${keyword}&page=${page}`
+    ).then(res => res.json()),
   randomCats: () =>
     fetch(`${API_ENDPOINT}/api/cats/random50`).then(res => res.json()),
   detailCat: id =>

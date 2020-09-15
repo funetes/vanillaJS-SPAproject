@@ -3,6 +3,8 @@ console.log('app is running!');
 class App {
   $target = null;
   data = [];
+  keyword = '';
+  page = 2;
   constructor($target) {
     this.$target = $target;
     this.darkmodeCheckBox = new DarkmodeCheckBox({
@@ -14,6 +16,7 @@ class App {
       $target,
       onSearch: keyword => {
         this.loading.setState({ show: true });
+        this.keyword = keyword;
         api.fetchCats(keyword).then(({ data }) => {
           this.loading.setState({ show: false });
           this.setState(data);
@@ -31,6 +34,15 @@ class App {
       $target,
       initialData: this.data,
       onClick: ({ id }) => this.imageInfo.showDetail(id),
+      onNextPage: () => {
+        this.loading.setState({ show: true });
+        api.fetchCatsPage(this.keyword, this.page).then(({ data }) => {
+          const newData = this.data.concat(data);
+          this.loading.setState({ show: false });
+          this.page = this.page + 1;
+          this.setState(newData);
+        });
+      },
     });
 
     this.imageInfo = new ImageInfo({
