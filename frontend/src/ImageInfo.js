@@ -1,3 +1,5 @@
+import { api } from './api.js';
+
 class ImageInfo {
   $imageInfo = null;
   data = null;
@@ -11,21 +13,20 @@ class ImageInfo {
     this.data = data;
     this.render();
   }
-  showDetail(id) {
-    api.detailCat(id).then(({ data }) => {
-      this.setState({
-        visible: true,
-        image: data,
-      });
+  showDetail = async id => {
+    const { data } = await api.detailCat(id);
+    this.setState({
+      visible: true,
+      image: data,
     });
-  }
-  closeModal() {
+  };
+  closeModal = () => {
     this.setState({
       visible: false,
       image: null,
     });
     this.render();
-  }
+  };
   setState(nextData) {
     this.data = nextData;
     this.render();
@@ -47,7 +48,7 @@ class ImageInfo {
             <div>태생: ${origin}</div>
           </div>
         </div>`;
-      $imageInfo.style.display = 'block';
+      $imageInfo.classList.add('open');
       $imageInfo
         .querySelector('.close')
         .addEventListener('click', () => closeModal());
@@ -60,7 +61,9 @@ class ImageInfo {
         e => e.target.nodeName !== 'IMG' && closeModal()
       );
     } else {
-      $imageInfo.style.display = 'none';
+      $imageInfo.classList.remove('open');
     }
   }
 }
+
+export default ImageInfo;

@@ -8,3 +8,5 @@ class RandomButton {
     this.$randomButton.addEventListener('click', onClick);
   }
 }
+
+export default RandomButton;

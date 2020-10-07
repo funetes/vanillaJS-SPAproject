@@ -15,21 +15,22 @@ class DarkmodeCheckBox {
 
     this.darkmodeInit();
   }
-  setHtmlAttribute(attribute) {
-    return document.documentElement.setAttribute(
+
+  setHtmlAttribute = attribute =>
+    document.documentElement.setAttribute(
       attribute,
       localStorage.getItem(COLOR_MODE)
     );
-  }
-  handleChange(e) {
+
+  handleChange = e => {
     const { setHtmlAttribute } = this;
     const {
       target: { checked },
     } = e;
     localStorage.setItem(COLOR_MODE, checked ? DARK : LIGHT);
     return setHtmlAttribute(COLOR_MODE);
-  }
-  darkmodeInit() {
+  };
+  darkmodeInit = () => {
     const {
       $darkModeInput,
       setHtmlAttribute,
@@ -46,5 +47,7 @@ class DarkmodeCheckBox {
 
     $darkModeInput.addEventListener('change', handleChange.bind(this));
     return;
-  }
+  };
 }
+
+export default DarkmodeCheckBox;

@@ -4,21 +4,23 @@ class SearchKeywords {
     this.$searchKeywordsList = document.createElement('ul');
     this.$searchKeywordsList.classList.add('searchKeywords');
     this.onSearch = onSearch;
+    this.$searchKeywordsList.style.display = 'none';
     $parentTarget.appendChild(this.$searchKeywordsList);
     const lastestKeyword = this.getKeywords();
-    lastestKeyword && this.setState(lastestKeyword);
+    this.setState(lastestKeyword);
   }
   // local => component state => render
   getKeywords() {
-    return JSON.parse(localStorage.getItem('searchKeyword'));
+    const keywords = JSON.parse(localStorage.getItem('searchKeyword'));
+    return keywords ? keywords : [];
   }
   add(keyword) {
-    let keywords = [];
-    const keywordsFromLS = localStorage.getItem('searchKeyword');
-    keywordsFromLS && (keywords = JSON.parse(keywordsFromLS));
-    keywords.unshift(keyword);
-    localStorage.setItem('searchKeyword', JSON.stringify(keywords.slice(0, 5)));
-
+    const keywordsFromLS = this.getKeywords();
+    keywordsFromLS.unshift(keyword);
+    localStorage.setItem(
+      'searchKeyword',
+      JSON.stringify(keywordsFromLS.slice(0, 5))
+    );
     this.setState(this.getKeywords());
   }
 
@@ -47,3 +49,5 @@ class SearchKeywords {
     });
   }
 }
+
+export default SearchKeywords;

@@ -1,3 +1,6 @@
+import SearchInput from './SearchInput.js';
+import RandomButton from './RandomButton.js';
+
 class Header {
   constructor({ $target, onSearch, onClick }) {
     this.$header = document.createElement('header');
@@ -9,10 +12,11 @@ class Header {
       $parentTarget: $target,
       onSearch,
     });
-
     this.randomButton = new RandomButton({
       $target: this.$header,
       onClick,
     });
   }
 }
+
+export default Header;

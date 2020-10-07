@@ -37,7 +37,7 @@ class SearchResult {
   }
 
   setState(nextData) {
-    this.data = nextData;
+    this.data = nextData || [];
     this.render();
   }
 
@@ -52,7 +52,12 @@ class SearchResult {
             .map(
               (cat, i) => `
           <div class="item" data-index=${i}>
-            <img src='https://via.placeholder.com/200x300' data-src=${cat.url} alt=${cat.name} />
+            <img src='https://via.placeholder.com/200x300' data-src=${
+              cat.url ? cat.url : 'https://via.placeholder.com/200x300'
+            } alt=${cat.name} />
+            <div class='itemInfo'>
+              ${cat.name}
+            </div>
           </div>
         `
             )
@@ -68,3 +73,5 @@ class SearchResult {
       });
   }
 }
+
+export default SearchResult;

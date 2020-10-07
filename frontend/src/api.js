@@ -1,16 +1,26 @@
 const API_ENDPOINT = 'http://localhost:4001';
 
-const api = {
-  fetchCats: keyword =>
-    fetch(`${API_ENDPOINT}/api/cats/search?q=${keyword}`).then(res =>
-      res.json()
-    ),
+const request = async url => {
+  try {
+    const res = await fetch(url);
+    if (res.status === 200) {
+      return res.json();
+    } else {
+      throw res;
+    }
+  } catch (error) {
+    if (error.status === 500) {
+      alert('internal error!');
+      return { data: null };
+    }
+  }
+};
+
+export const api = {
+  fetchCats: (keyword, limit) =>
+    request(`${API_ENDPOINT}/api/cats/search?q=${keyword}&limit=${limit}`),
   fetchCatsPage: (keyword, page) =>
-    fetch(
-      `${API_ENDPOINT}/api/cats/search?q=${keyword}&page=${page}`
-    ).then(res => res.json()),
-  randomCats: () =>
-    fetch(`${API_ENDPOINT}/api/cats/random50`).then(res => res.json()),
-  detailCat: id =>
-    fetch(`${API_ENDPOINT}/api/cats/${id}`).then(res => res.json()),
+    request(`${API_ENDPOINT}/api/cats/search?q=${keyword}&page=${page}`),
+  randomCats: () => request(`${API_ENDPOINT}/api/cats/random50`),
+  detailCat: id => request(`${API_ENDPOINT}/api/cats/${id}`),
 };
